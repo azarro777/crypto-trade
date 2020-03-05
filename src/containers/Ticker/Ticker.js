@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import './Ticker.css';
-import {environment} from "../environment/environment";
+import {environment} from "../../environment/environment";
 
-export default class Ticker extends Component {
+class Ticker extends Component {
 
     state = {
         value1: 0,
@@ -55,3 +55,5 @@ export default class Ticker extends Component {
         )
     }
 }
+
+export default Ticker;
