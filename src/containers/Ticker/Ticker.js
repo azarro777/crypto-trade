@@ -17,8 +17,8 @@ class Ticker extends Component {
         } else if (!nextProps.isActive && this.props.isActive){
             clearInterval(this.interval);
             this.setState({
-                value1: 0,
-                value2: 0
+                usd: 0,
+                eur: 0
             })
         }
 
@@ -29,8 +29,8 @@ class Ticker extends Component {
         return fetch(`${environment.baseURL}price?api_key=${environment.apiKey}&fsym=${this.props.pair}&tsyms=USD,EUR`)
             .then(r => r.json())
             .then(res =>{this.setState({
-                value1: res.USD,
-                value2: res.EUR
+                usd: res.USD,
+                eur: res.EUR
             })});
     };
 
@@ -49,8 +49,8 @@ class Ticker extends Component {
         return (
             <div className="ticker">
                 <p>{pair.toUpperCase().replace('_', ' to ')}</p>
-                <p>{`$ ${this.state.value1}`}</p>
-                <p>{`€ ${this.state.value2}`}</p>
+                <p>{`$ ${this.state.usd}`}</p>
+                <p>{`€ ${this.state.eur}`}</p>
             </div>
         )
     }
