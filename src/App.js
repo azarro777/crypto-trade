@@ -1,23 +1,33 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
-import Navbar from "./components/Navbar";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import Layout from "./hoc/Layout";
+import Redirect from "react-router-dom/es/Redirect";
 
 
 
-const App = () => {
-    return (
-        <BrowserRouter>
-            <Navbar/>
+class App extends Component {
+
+    render() {
+        let routes = (
+            <BrowserRouter>
                 <Switch>
                     <Route path={"/"} exact component={Home}/>
                     <Route path={"/about"} component={About}/>
+                    <Redirect to={'/'}/>
                 </Switch>
-        </BrowserRouter>
-    );
-};
+            </BrowserRouter>
+        );
+
+        return (
+            <Layout>
+                { routes }
+            </Layout>
+        );
+    }
+}
 
 export default App;
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import currencies from "../currencies";
 import Ticker from "../containers/Ticker/Ticker";
-import "./Home.css";
+import classes from "./Home.module.css";
 
 class Home extends Component {
 
@@ -36,16 +36,16 @@ class Home extends Component {
 
     render() {
         return (
-            <div className="Home">
+            <div className={classes.Home}>
                 <aside>
                     <button type="button" className="btn btn-primary" onClick={this.showListHandler}>
                         Choose crypto
                     </button>
                     {this.state.ShowList ?
-                        <ul className="currList">
+                        <ul >
                             {currencies.map(curr =>(
                                 <li key={curr}
-                                    className="currItem">
+                                    className={classes.CurrItem}>
                                     <label htmlFor={curr}>{curr.toUpperCase()}</label>
                                     <input type="checkbox" id={curr} onChange={this.handleCheckBox(curr)}/>
                                 </li>

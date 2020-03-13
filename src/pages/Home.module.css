@@ -1,4 +1,4 @@
-.home {
+.Home {
     display: flex;
     height: 100vh;
 }
@@ -10,7 +10,7 @@ aside {
     overflow: auto;
 }
 
-.currItem {
+.CurrItem {
     width: 100%;
     height: 40px;
     border-bottom: 1px solid #ddd;
