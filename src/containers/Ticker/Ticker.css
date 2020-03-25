@@ -1,12 +1,37 @@
 .ticker {
-  width: 150px;
-  height: 100px;
-  margin: 0 10px;
-  background-color: #eee;
-  border: 1px solid #ddd;
-
+  width: 220px;
+  height: 321px;
+  margin: 20px 20px;
+  background: #fff;
+  border-top-right-radius: 10px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: space-around;
+  position: relative;
+  box-shadow: 0 14px 26px rgba(0,0,0,0.04);
+  transition: all 0.3s ease-out;
+  text-decoration: none;
+}
+
+.ticker:hover {
+  transform: translateY(-5px) scale(1.005) translateZ(0);
+  box-shadow: 0 24px 36px rgba(0,0,0,0.11),
+  0 24px 46px rgba(255, 215, 97, 0.48);
+}
+
+.ticker:hover .overlay {
+  transform: scale(4) translateZ(0);
+}
+
+.ticker:hover .circle {
+  border-color: #ffeeba;
+  background: #ffd861;
+}
+
+.ticker:active {
+  transform: scale(1) translateZ(0);
+  box-shadow: 0 15px 24px rgba(0,0,0,0.11),
+  0 15px 24px rgba(255, 215, 97, 0.48);
 }

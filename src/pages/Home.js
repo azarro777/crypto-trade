@@ -35,10 +35,14 @@ class Home extends Component {
     };
 
     render() {
+        const btn = [
+            classes.button,
+            classes.success
+        ];
         return (
-            <div className={classes.Home}>
+            <>
                 <aside>
-                    <button type="button" className="btn btn-primary" onClick={this.showListHandler}>
+                    <button className={btn.join(' ')}  onClick={this.showListHandler}>
                         Choose crypto
                     </button>
                     {this.state.ShowList ?
@@ -61,7 +65,7 @@ class Home extends Component {
                         pair={pair}
                         isActive={this.state.activePairs.includes(pair)}/>)}
                 </main>
-            </div>
+            </>
         )
     }
 }

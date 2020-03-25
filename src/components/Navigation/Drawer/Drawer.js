@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import classes from "./Drawer.module.css";
 import Backdrop from "../../Backdrop/Backdrop";
-import {MemoryRouter } from "react-router-dom";
+import {NavLink } from "react-router-dom";
 
 
 class Drawer extends Component {
@@ -10,14 +10,14 @@ class Drawer extends Component {
         return links.map((link, index)=>{
             return (
                 <li key={index}>
-                    <MemoryRouter
+                    <NavLink
                         to={link.to}
                         exact={link.exact}
                         activeClassName={classes.active}
                         onClick={this.clickHandler}
                     >
                         {link.label}
-                    </MemoryRouter >
+                    </NavLink >
                 </li>
             )
         })
