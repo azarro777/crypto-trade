@@ -21,8 +21,6 @@ class Ticker extends Component {
                 eur: 0
             })
         }
-
-
     }
 
     fetchCurrency = () =>{
