@@ -33,9 +33,9 @@ class Layout extends Component {
                     isOpen={this.state.menu}
                 />
 
-                <main>
-                    {this.props.children}
-                </main>
+
+                {this.props.children}
+
             </div>
         )
     }

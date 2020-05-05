@@ -1,73 +1,78 @@
 import React, { Component } from "react";
-import currencies from "../currencies";
-import Ticker from "../containers/Ticker/Ticker";
-import classes from "./Home.module.css";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
+import { environment } from "../environment/environment";
+import { Container, Grid } from "@material-ui/core";
 
-class Home extends Component {
+const useStyles = makeStyles((theme) => ({
+  table: {
+    minWidth: 650,
+  },
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+      width: "25ch",
+    },
+  },
+}));
 
-    state = {
-        activePairs: [],
-        ShowList: false
-    };
+const row = [1, 2, 3, 4, 5, 6];
 
-
-    handleCheckBox = currency => event => {
-        const {checked} = event.target;
-        //const checked = event.target.checked;
-
-        this.setState(({activePairs}) =>{
-            let pairs = [...activePairs];
-
-            if (checked){
-                pairs.push(currency);
-            } else {
-                pairs = pairs.filter(pair => pair !== currency);
-            }
-
-            return {
-                activePairs: pairs,
-            }
-        })
-    };
-
-    showListHandler = () => {
-        this.setState({ShowList: !this.state.ShowList})
-    };
-
-    render() {
-        const btn = [
-            classes.button,
-            classes.success
-        ];
-        return (
-            <>
-                <aside>
-                    <button className={btn.join(' ')}  onClick={this.showListHandler}>
-                        Choose crypto
-                    </button>
-                    {this.state.ShowList ?
-                        <ul >
-                            {currencies.map(curr =>(
-                                <li key={curr}
-                                    className={classes.CurrItem}>
-                                    <label htmlFor={curr}>{curr.toUpperCase()}</label>
-                                    <input type="checkbox" id={curr} onChange={this.handleCheckBox(curr)}/>
-                                </li>
-                            ))}
-                        </ul> : null
-                    }
-
-                </aside>
-
-                <main>
-                    {currencies.map(pair => <Ticker
-                        key={pair}
-                        pair={pair}
-                        isActive={this.state.activePairs.includes(pair)}/>)}
-                </main>
-            </>
-        )
-    }
+export default function SimpleTable() {
+  const classes = useStyles();
+  return (
+    <Container maxWidth="lg">
+      <Grid container spacing={3}>
+        <Grid item xs={8}>
+          <TableContainer className={classes.table} component={Paper}>
+            <Table aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>NAME</TableCell>
+                  <TableCell align="right">FULLNAME</TableCell>
+                  <TableCell align="right">PRICE</TableCell>
+                  <TableCell align="right">VOLUME24HOUR</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {row.map((coin) => (
+                  <TableRow hover key={coin}>
+                    <TableCell component="th" scope="row">
+                      {coin}
+                    </TableCell>
+                    <TableCell align="right">{coin.FullName}</TableCell>
+                    <TableCell align="right">{coin.Price}</TableCell>
+                    <TableCell align="right">{coin.carbs}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+        <Grid item xs={4}>
+          <form
+            className={classes.root}
+            noValidate
+            autoComplete="off"
+            component={Paper}
+          >
+            <TextField id="standard-basic" label="Standard" />
+            <TextField id="filled-basic" label="Filled" variant="filled" />
+            <TextField
+              id="outlined-basic"
+              label="Outlined"
+              variant="outlined"
+            />
+          </form>
+        </Grid>
+      </Grid>
+    </Container>
+  );
 }
-
-export default Home;

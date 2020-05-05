@@ -1,57 +1,50 @@
-import React, {Component} from "react";
-import './Ticker.css';
-import {environment} from "../../environment/environment";
+import React, { Component } from "react";
+import classes from "./Ticker.module.css";
+import { environment } from "../../environment/environment";
 
 class Ticker extends Component {
-
-    state = {
-        value1: 0,
-        value2: 0
-    };
-    //isActive
-
-    componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.isActive && !this.props.isActive){
-            this.fetchCurrency();
-            this.interval = setInterval(this.fetchCurrency, 10000);
-        } else if (!nextProps.isActive && this.props.isActive){
-            clearInterval(this.interval);
-            this.setState({
-                usd: 0,
-                eur: 0
-            })
-        }
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.isActive && !this.props.isActive) {
+      this.fetchCurrency();
+      this.interval = setInterval(this.fetchCurrency, 10000);
+    } else if (!nextProps.isActive && this.props.isActive) {
+      clearInterval(this.interval);
     }
+  }
 
-    fetchCurrency = () =>{
-        return fetch(`${environment.baseURL}price?api_key=${environment.apiKey}&fsym=${this.props.pair}&tsyms=USD,EUR`)
-            .then(r => r.json())
-            .then(res =>{this.setState({
-                usd: res.USD,
-                eur: res.EUR
-            })});
-    };
+  fetchCurrency = () => {
+    return fetch(`${environment.baseURL}`)
+      .then((r) => r.json())
+      .then(({ data }) => {
+        const coins = data.Data.map((coin) => {
+          const obj = {
+            name: coin.CoinInfo.Name,
+            fullName: coin.CoinInfo.FullName,
+            imageUrl: `https://cryptocompare.com/${coin.CoinInfo.imageUrl}`,
+            price: coin.RAW.USD.PRICE.toFixed(3),
+            volume24hour: coin.RAW.USD.VOLUME24HOUR.toFixed(2),
+          };
+          return obj;
+        });
+        this.props(coins);
+      });
+  };
 
-    /*componentDidMount() {
-        this.fetchCurrency();
-        this.interval = setInterval(this.fetchCurrency, 10000);
-    }*/
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
+  render() {
+    const { pair } = this.props;
 
-    render() {
-        const {pair} = this.props;
-
-        return (
-            <div className="ticker">
-                <p>{pair.toUpperCase().replace('_', ' to ')}</p>
-                <p>{`$ ${this.state.usd}`}</p>
-                <p>{`€ ${this.state.eur}`}</p>
-            </div>
-        )
-    }
+    return (
+      <div className={classes.ticker}>
+        <p>{pair.toUpperCase().replace("_", " to ")}</p>
+        <p>{`$ ${this.state.usd}`}</p>
+        <p>{`€ ${this.state.eur}`}</p>
+      </div>
+    );
+  }
 }
 
 export default Ticker;
